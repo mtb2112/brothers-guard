@@ -13,7 +13,7 @@ type Props = {
 }
 
 function formatShowDate(date: string) {
-  return new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric'}).format(new Date(date))
+  return new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'}).format(new Date(date))
 }
 
 export default function HomepageDesigns({settings, shows, songs}: Props) {
@@ -67,6 +67,7 @@ export default function HomepageDesigns({settings, shows, songs}: Props) {
     </main>
   )
 }
+
 
 
 

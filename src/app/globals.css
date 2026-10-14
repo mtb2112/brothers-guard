@@ -14,6 +14,13 @@
 
 html {
   background: #0b0908;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -29,4 +36,3 @@ body {
 .font-roboto-slab {
   font-family: var(--font-roboto-slab), serif;
 }
-

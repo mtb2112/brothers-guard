@@ -1,4 +1,7 @@
-﻿import Link from 'next/link'
+﻿'use client'
+
+import Link from 'next/link'
+import {useState} from 'react'
 
 import type {SocialLinks} from '@/sanity/lib/queries'
 
@@ -23,24 +26,37 @@ type Props = {
   socialLinks?: SocialLinks
 }
 
+const navItems = [
+  {label: 'Home', href: '/'},
+  {label: 'About', href: '/about'},
+  {label: 'Music', href: '/music'},
+  {label: 'Shows', href: '/shows'},
+  {label: 'Photos', href: '/photos'},
+  {label: 'Contact', href: '/contact'},
+]
+
 export default function SiteHeader({bandName = 'Brothers Guard', socialLinks}: Props) {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
-    <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 font-montserrat text-[10px] font-bold uppercase tracking-[0.22em] sm:px-10">
-      <nav className="hidden gap-7 text-stone-200/90 md:flex">
-        <Link href="/" className="hover:text-amber-500">Home</Link>
-        <Link href="/about" className="hover:text-amber-500">About</Link>
-        <Link href="/music" className="hover:text-amber-500">Music</Link>
-        <Link href="/shows" className="hover:text-amber-500">Shows</Link>
-        <Link href="/photos" className="hover:text-amber-500">Photos</Link>
-        <Link href="/contact" className="hover:text-amber-500">Contact</Link>
+    <header aria-label={bandName} className="relative z-20 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 font-montserrat text-[10px] font-bold uppercase tracking-[0.22em] sm:px-10">
+      <nav className="hidden gap-7 text-stone-200/90 md:flex" aria-label="Primary navigation">
+        {navItems.map((item) => <Link key={item.href} href={item.href} className="hover:text-amber-500">{item.label}</Link>)}
       </nav>
-      <Link href="/" className="text-sm tracking-[0.28em] md:hidden">{bandName}</Link>
+      <button type="button" className="flex h-8 w-8 flex-col items-center justify-center gap-1.5 text-stone-200 md:hidden" aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+        <span className={`block h-0.5 w-5 bg-current transition ${menuOpen ? 'translate-y-2 rotate-45' : ''}`} />
+        <span className={`block h-0.5 w-5 bg-current transition ${menuOpen ? 'opacity-0' : ''}`} />
+        <span className={`block h-0.5 w-5 bg-current transition ${menuOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+      </button>
       <div className="ml-auto flex items-center gap-4 text-stone-200/90" aria-label="Social media links">
         {socialLinks?.facebook ? <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noreferrer" className="hover:text-amber-500"><FacebookIcon /></a> : null}
         {socialLinks?.instagram ? <a href={socialLinks.instagram} aria-label="Instagram" target="_blank" rel="noreferrer" className="hover:text-amber-500"><InstagramIcon /></a> : null}
         {socialLinks?.youtube ? <a href={socialLinks.youtube} aria-label="YouTube" target="_blank" rel="noreferrer" className="hover:text-amber-500"><YoutubeIcon /></a> : null}
         {socialLinks?.spotify ? <a href={socialLinks.spotify} aria-label="Spotify" target="_blank" rel="noreferrer" className="hover:text-amber-500"><SpotifyIcon /></a> : null}
       </div>
+      {menuOpen ? <nav className="absolute left-6 right-6 top-full border border-white/15 bg-[#0b0908]/95 p-4 shadow-2xl backdrop-blur md:hidden" aria-label="Mobile navigation">{navItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="block border-b border-white/10 px-2 py-3 text-stone-200 hover:text-amber-500 last:border-b-0">{item.label}</Link>)}</nav> : null}
     </header>
   )
 }
+
+

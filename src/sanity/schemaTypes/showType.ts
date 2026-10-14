@@ -24,6 +24,27 @@ export const showType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'performanceType',
+      title: 'Performance type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Opener', value: 'opener'},
+          {title: 'Headliner', value: 'headliner'},
+        ],
+        layout: 'radio',
+        direction: 'horizontal',
+      },
+      initialValue: 'headliner',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'address',
       title: 'Address',
       type: 'string',
@@ -54,3 +75,4 @@ export const showType = defineType({
     },
   },
 })
+

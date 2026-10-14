@@ -51,7 +51,7 @@ export default function HomepageDesigns({settings, shows, songs}: Props) {
           <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#c8752e]">Catch us live</p>
           <h2 className="mt-3 font-roboto-slab text-4xl text-[#f0dfbc]">Upcoming shows</h2>
           <div className="mt-7 space-y-4">
-            {shows.length === 0 ? <p className="text-stone-400">No public shows are scheduled yet.</p> : shows.map((show) => <div key={show._id} className="flex items-center justify-between border-b border-white/15 pb-4"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#c8752e]">{formatShowDate(show.date)}</p><p className="mt-1 font-semibold">{show.venue}</p></div><p className="text-sm text-stone-400">{show.city}</p></div>)}
+            {shows.length === 0 ? <p className="text-stone-400">No public shows are scheduled yet.</p> : shows.map((show) => <div key={show._id} className="flex items-center justify-between border-b border-white/15 pb-4"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#c8752e]">{formatShowDate(show.date)}</p><p className="mt-1 font-semibold">{show.venue}</p>{show.performanceType ? <p className="mt-1 font-montserrat text-[10px] font-bold uppercase tracking-[0.14em] text-[#c8752e]">{show.performanceType}</p> : null}{show.description ? <p className="mt-2 max-w-md text-sm text-stone-400">{show.description}</p> : null}</div><p className="text-sm text-stone-400">{show.city}</p></div>)}
           </div>
         </div>
         <div id="about">
@@ -67,6 +67,9 @@ export default function HomepageDesigns({settings, shows, songs}: Props) {
     </main>
   )
 }
+
+
+
 
 
 

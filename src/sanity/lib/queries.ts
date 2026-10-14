@@ -27,6 +27,8 @@ export type Show = {
   city: string
   address?: string
   ticketUrl?: string
+  description?: string
+  performanceType?: 'opener' | 'headliner'
 }
 
 export type Song = {
@@ -38,7 +40,7 @@ export type Song = {
 }
 
 const siteSettingsQuery = `*[_type == "siteSettings"][0]{bandName, tagline, bio, bookingEmail, location, heroImage, socialLinks}`
-const upcomingShowsQuery = `*[_type == "show" && dateTime(date) >= dateTime(now()) && privateEvent != true] | order(date asc)[0...$limit]{_id, date, venue, city, address, ticketUrl}`
+const upcomingShowsQuery = `*[_type == "show" && dateTime(date) >= dateTime(now()) && privateEvent != true] | order(date asc)[0...$limit]{_id, date, venue, city, address, ticketUrl, description, performanceType}`
 const songsQuery = `*[_type == "song"] | order(genre asc, artist asc, title asc){_id, title, artist, genre, featured}`
 const featuredSongsQuery = `*[_type == "song" && featured == true] | order(artist asc, title asc)[0...$limit]{_id, title, artist, genre}`
 
@@ -101,3 +103,5 @@ async function getCachedFeaturedSongs(limit: number) {
   cacheLife('hours')
   return fetchFeaturedSongs(limit)
 }
+
+
